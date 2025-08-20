@@ -26,6 +26,8 @@ ssh -i your-key.pem ubuntu@<EC2-Public-IP>
 * ```sudo apt install docker.io -y```
 * ```sudo systemctl start docker```
 * ```sudo systemctl enable docker```
+* ```sudo apt install nginx``` (For reverse proxy)
+* ```sudo systemctl start nginx``` 
 * ```sudo apt install mysql-client -y```
 * ```mysql -h <RDS-ENDPOINT> -u admin -p```
 * ```SHOW DATABASES;```
@@ -45,7 +47,7 @@ ssh -i your-key.pem ubuntu@<EC2-Public-IP>
 8. ```Copy Endpoint``` (looks like: wordpressdb.abc123xyz.us-east-1.rds.amazonaws.com)
 ---
 ### Step 5: Run WordPress Docker Container
-On EC2, run WordPress container:
+**On EC2, run WordPress container:**
 
 ```docker run -d --name wordpress -p 80:80 -e WORDPRESS_DB_HOST=<your-rds-endpoint> -e WORDPRESS_DB_USER=admin -e WORDPRESS_DB_PASSWORD=yourpassword -e WORDPRESS_DB_NAME=<wordpressdb> wordpress```
 
@@ -55,3 +57,44 @@ On EC2, run WordPress container:
 * You’ll see WordPress setup page
 * Complete installation → site title, username, password.
 ---
+
+### Step 7: Configure Nginx Reverse Proxy
+* sudo nano /etc/nginx/sites-available/wordpress
+* Paste this code to the configuration file
+```
+server {
+    listen 80;
+    server_name tech-connect.cloud www.tech-connect.cloud;
+
+    location / {
+        proxy_pass http://127.0.0.1:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+* sudo systemctl restart nginx
+---
+### Step 8: Point Hostinger Domain → EC2
+* Login to Hostinger
+* Find DNS setting
+
+| Record Type |  Host   | Name                   | Value                                      | Routing Policy |
+|-------------|---------|------------------------|--------------------------------------------|----------------|
+| A           |   @     | tech-connect.cloud     | EC2 Public IP                              | Simple         |
+| A           |   www   | www.tech-connect.cloud | EC2 Public IP                              | Simple         |
+
+* Save → DNS propagation takes 10–30 min.
+---
+### Step 9: Secure with Let’s Encrypt (Certbot)
+* sudo apt install certbot python3-certbot-nginx -y
+* sudo certbot --nginx -d tech-connect.cloud -d www.tech-connet.cloud
+* sudo certbot renew --dry-run
+
+### Step 10: Access WordPress
+ ```https://tech-connect.cloud```
+
+ 
+
+
+
