@@ -89,7 +89,7 @@ server {
 ### Step 9: Secure with Let’s Encrypt (Certbot)
 * sudo apt install certbot python3-certbot-nginx -y
 * sudo certbot --nginx -d tech-connect.cloud -d www.tech-connet.cloud
-* sudo certbot renew --dry-run
+* sudo certbot renew --dry -run
 
 ### Step 10: Access WordPress
  ```https://tech-connect.cloud```
