@@ -26,6 +26,10 @@ ssh -i your-key.pem ubuntu@<EC2-Public-IP>
 * ```sudo apt install docker.io -y```
 * ```sudo systemctl start docker```
 * ```sudo systemctl enable docker```
+* ```sudo apt install mysql-client -y```
+* ```mysql -h <RDS-ENDPOINT> -u admin -p```
+* ```SHOW DATABASES;```
+* ```CREATE DATABASE wordpressdb;```  
 ---
 ### Step 4: Create RDS (MySQL)
 1. ```Go to RDS →``` Create Database.
