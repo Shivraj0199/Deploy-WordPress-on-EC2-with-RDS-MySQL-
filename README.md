@@ -13,7 +13,8 @@ Deployed WordPress using Docker on EC2, with RDS (MySQL) as a managed backend da
 - Add **Security Group Rules**:  
   - `HTTP (80)` → 0.0.0.0/0  
   - `HTTPS (443)` → 0.0.0.0/0  
-  - `SSH (22)` → Your IP  
+  - `SSH (22)` → Your IP
+  - `MYSQL/Aurora (3306)` → 0.0.0.0/0
 ---
 ### Step: 2 Connect to EC2 Instance  
 ```
@@ -42,7 +43,7 @@ ssh -i your-key.pem ubuntu@<EC2-Public-IP>
 ### Step 5: Run WordPress Docker Container
 On EC2, run WordPress container:
 
-```docker run -d --name wordpress -p 80:80 -e WORDPRESS_DB_HOST=<your-rds-endpoint:3306> -e WORDPRESS_DB_USER=admin -e WORDPRESS_DB_PASSWORD=yourpassword -e WORDPRESS_DB_NAME=<wordpressdb> wordpress```
+```docker run -d --name wordpress -p 80:80 -e WORDPRESS_DB_HOST=<your-rds-endpoint> -e WORDPRESS_DB_USER=admin -e WORDPRESS_DB_PASSWORD=yourpassword -e WORDPRESS_DB_NAME=<wordpressdb> wordpress```
 
 ---
 ### Step 6: Access WordPress
