@@ -15,6 +15,8 @@ Deployed WordPress using Docker on EC2, with RDS (MySQL) as a managed backend da
   - `HTTPS (443)` → 0.0.0.0/0  
   - `SSH (22)` → Your IP
   - `MYSQL/Aurora (3306)` → 0.0.0.0/0
+ 
+![](https://github.com/Shivraj0199/Deploy-WordPress-on-EC2-with-RDS-MySQL-/blob/main/Img/Screenshot%202025-08-20%20171248.png)
 ---
 ### Step: 2 Connect to EC2 Instance  
 ```
@@ -31,7 +33,9 @@ ssh -i your-key.pem ubuntu@<EC2-Public-IP>
 * ```sudo apt install mysql-client -y```
 * ```mysql -h <RDS-ENDPOINT> -u admin -p```
 * ```SHOW DATABASES;```
-* ```CREATE DATABASE wordpressdb;```  
+* ```CREATE DATABASE wordpressdb;```
+
+![](https://github.com/Shivraj0199/Deploy-WordPress-on-EC2-with-RDS-MySQL-/blob/main/Img/Screenshot%202025-08-20%20185803.png)
 ---
 ### Step 4: Create RDS (MySQL)
 1. ```Go to RDS →``` Create Database.
@@ -45,6 +49,8 @@ ssh -i your-key.pem ubuntu@<EC2-Public-IP>
 6. ```Security group →``` allow MySQL (3306) inbound from your EC2 Security Group.
 7. ```Launch DB.```
 8. ```Copy Endpoint``` (looks like: wordpressdb.abc123xyz.us-east-1.rds.amazonaws.com)
+
+![](https://github.com/Shivraj0199/Deploy-WordPress-on-EC2-with-RDS-MySQL-/blob/main/Img/Screenshot%202025-08-20%20171332.png)
 ---
 ### Step 5: Run WordPress Docker Container
 **On EC2, run WordPress container:**
@@ -56,6 +62,8 @@ ssh -i your-key.pem ubuntu@<EC2-Public-IP>
 * Open browser → ```http://EC2-PUBLIC-IP```
 * You’ll see WordPress setup page
 * Complete installation → site title, username, password.
+
+![](https://github.com/Shivraj0199/Deploy-WordPress-on-EC2-with-RDS-MySQL-/blob/main/Img/Screenshot%202025-08-20%20191011.png)
 ---
 
 ### Step 7: Configure Nginx Reverse Proxy
