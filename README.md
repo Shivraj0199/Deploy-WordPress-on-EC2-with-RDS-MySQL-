@@ -21,7 +21,7 @@ Deployed WordPress using Docker on EC2, with RDS (MySQL) as a managed backend da
 ssh -i your-key.pem ubuntu@<EC2-Public-IP>
 ```
 ----
-### Step 3: Install Docker on EC2
+### Step 3: Install Docker and other dependencies on EC2
 * ```sudo apt update -y```
 * ```sudo apt install docker.io -y```
 * ```sudo systemctl start docker```
@@ -73,6 +73,8 @@ server {
     }
 }
 ```
+* sudo ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/
+* sudo nginx -t
 * sudo systemctl restart nginx
 ---
 ### Step 8: Point Hostinger Domain → EC2
@@ -90,7 +92,7 @@ server {
 * sudo apt install certbot python3-certbot-nginx -y
 * sudo certbot --nginx -d tech-connect.cloud -d www.tech-connet.cloud
 * sudo certbot renew --dry -run
-
+---
 ### Step 10: Access WordPress
  ```https://tech-connect.cloud```
 
